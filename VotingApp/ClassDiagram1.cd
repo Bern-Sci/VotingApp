@@ -1,0 +1,77 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1">
+  <Class Name="Candidate">
+    <Position X="1.5" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAgAAAAAAAEAAAAAIAAAAAAAAAAAAAgAAAAAAA=</HashCode>
+      <FileName>Candidate.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Property Name="pos" />
+    </ShowAsAssociation>
+  </Class>
+  <Class Name="VotingApp.CandidateList">
+    <Position X="11" Y="0.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAABIAAAAAAAAAAAAAAAAAIAAACAAAAAAAAA=</HashCode>
+      <FileName>CandidateList.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsCollectionAssociation>
+      <Property Name="candidates" />
+    </ShowAsCollectionAssociation>
+  </Class>
+  <Class Name="VotingApp.Login">
+    <Position X="14.25" Y="3.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAQABAAAAAAAAAAAAAAAACAAIAAAAAA=</HashCode>
+      <FileName>Login.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsCollectionAssociation>
+      <Field Name="candidates" />
+      <Field Name="voters" />
+    </ShowAsCollectionAssociation>
+  </Class>
+  <Class Name="VotingApp.Student">
+    <Position X="4.5" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAQAAAAAAAACAAAAAAACAAA=</HashCode>
+      <FileName>Student.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="VotingApp.Voter">
+    <Position X="3.75" Y="6.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAEAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Voter.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="VotingApp.VoterList">
+    <Position X="11.5" Y="5.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAgAAAAAAAAQAEAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>VoterList.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsCollectionAssociation>
+      <Property Name="voters" />
+    </ShowAsCollectionAssociation>
+  </Class>
+  <Class Name="Vote">
+    <Position X="6.75" Y="3" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AQAAAAAIAAAAAAQABAAAAAAAAAAAAAAAQAAAAAAAAAA=</HashCode>
+      <FileName>Vote.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Field Name="voter" />
+      <Field Name="candidateList" />
+    </ShowAsAssociation>
+  </Class>
+  <Enum Name="VotingApp.Position">
+    <Position X="1.75" Y="6.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>gAAgAAABABAAAAAAACAAAAAwEAIAAAAAAAAAAQKAAAA=</HashCode>
+      <FileName>Position.cs</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Font Name="Segoe UI" Size="9" />
+</ClassDiagram>
