@@ -38,13 +38,14 @@ namespace VotingApp
             return false;
         }
 
-        public bool LoginPrompt()
+        public Voter LoginPrompt()
         {
             bool isLoggedIn = false;
+            string studentId = "";
             while(isLoggedIn == false)
             {
                 Console.Write("Student ID: ");
-                string studentId = Console.ReadLine();
+                studentId = Console.ReadLine();
                 Console.Write("\nPassword: ");
                 string password = Console.ReadLine();
                 bool isSuccess = TryLogin(studentId, password);
@@ -56,7 +57,12 @@ namespace VotingApp
                     Console.ReadKey();
                 }
             }
-            return isLoggedIn;
+            return getVoter(studentId);
+        }
+
+        public Voter getVoter(string studentId)
+        {
+            return new Voter(studentId);
         }
     }
 }

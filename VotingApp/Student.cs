@@ -18,6 +18,13 @@ namespace VotingApp
             this.StudentId = sID;
             this.Password = pass;
         }
+        public Student(string sID, string pass)
+        {
+            this.StudentId=sID;
+            this.Password = pass;
+        }
+        public Student(string sID)
+        { this.StudentId=sID; }
 
     }
 }

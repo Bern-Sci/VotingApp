@@ -11,17 +11,17 @@ namespace VotingApp
         static void Main(string[] args)
         {
             CandidateList candidateList = new CandidateList("D:\\CandidateList\\Candidates.txt");
-            //VoterList voters = new VoterList("D:\\CandidateList\\VoterList.txt");
-            //Login newLog = new Login(candidateList, voters);
-            //if (newLog.LoginPrompt())
-            //{
-                Voter Bern = new Voter("Bern", "20-1-02139", "12345");
-                Vote Kiosk = new Vote(Bern, candidateList);
-                Kiosk.startVote();
-                Kiosk.disp2dArr();
-                Console.ReadLine();
-            //}
-           
+            VoterList voters = new VoterList("D:\\CandidateList\\VoterList.txt");
+            Login newLog = new Login(candidateList, voters);
+            Voter Name = newLog.LoginPrompt();
+            Vote Vote1 = new Vote(Name, candidateList);
+            Vote1.startVote();
+            if(Vote1.ShowVoteSummary() == true)
+            {
+                Vote1.VoteAgain();
+            }
+            Vote1.ShowVoteSummary();
+            Console.ReadLine();
         }
     }
 }

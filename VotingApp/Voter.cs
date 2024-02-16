@@ -11,9 +11,12 @@ namespace VotingApp
         //naa dri dapat ang iyang mga na vote
 
         public Voter(string name, string sID, string pass) : base(name, sID, pass) { }
+        public Voter(string sID, string pass) : base(sID, pass) { }
+        public Voter(string sID) : base(sID) { }
+
         public override string ToString()
         {
-            return "Name(Voter): " + this.Name + "\nStudentID: " + this.StudentId;
+            return "\nStudentID: " + this.StudentId;
         }
     }
     
