@@ -57,11 +57,6 @@ namespace VotingApp
                     Console.ReadKey();
                 }
             }
-            return getVoter(studentId);
-        }
-
-        public Voter getVoter(string studentId)
-        {
             return new Voter(studentId);
         }
     }
