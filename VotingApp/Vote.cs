@@ -32,7 +32,7 @@ public class Vote
         Choices.Add(VoteForCandidateInPos(candidateList.getCandidatesInPos(Position.SecondYrRep), 1));
         Choices.Add(VoteForCandidateInPos(candidateList.getCandidatesInPos(Position.ThirdYrRep), 1));
         Choices.Add(VoteForCandidateInPos(candidateList.getCandidatesInPos(Position.FourthYrRep), 1));
-        Choices.Add(VoteForCandidateInPos(candidateList.getCandidatesInPos(Position.IrregRep), 1));
+
     }
 
     private List<int> VoteForCandidateInPos(List<Candidate> candidates, int maxVotes)
@@ -148,7 +148,6 @@ public class Vote
         if (index == 9) candidates = candidateList.getCandidatesInPos(Position.SecondYrRep);
         if (index == 10) candidates = candidateList.getCandidatesInPos(Position.ThirdYrRep);
         if (index == 11) candidates = candidateList.getCandidatesInPos(Position.FourthYrRep);
-        if (index == 12) candidates = candidateList.getCandidatesInPos(Position.IrregRep);
         if (candidates[0].pos == Position.PIO || candidates[0].pos == Position.SgtAtArms)
             maxVote = 2;
         else maxVote = 1;
