@@ -42,10 +42,7 @@ namespace VotingApp
                 Console.WriteLine("Choose a candidate to vote:");
                 int counter = 1;
                 foreach (Candidate c in candidate)
-                {
-
                     counter++;
-                }
             }
             return choice;
 
