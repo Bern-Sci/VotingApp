@@ -100,29 +100,17 @@ public class Vote
     {
         Console.Clear();
         int ctr = 0;
+        
         foreach (Candidate c in chosenCandidate)
-        {
             Console.WriteLine($"{ctr++}. {c.pos.ToString()}: {c.Name}");
-        }
+        
         Console.WriteLine("Vote again? Y/N (Any Key)");
         string res = Console.ReadLine();
         res.ToUpper();
         if (res[0] == 'Y') return true;
         else return false;
-        
     }
 
-
-    public void disp2dArr()
-    {
-        Console.Clear();
-        for(int i = 0; i < Choices.Count; i++) 
-        {
-            for (int j = 0; j < Choices[i].Count; j++)
-                Console.Write(Choices[i][j] + 1 + ", ");
-            Console.WriteLine();
-        }
-    }
 
     public void VoteAgain()
     {
@@ -152,5 +140,4 @@ public class Vote
         else maxVote = 1;
         VoteForCandidateInPos(candidates, maxVote);
     }
-
 }
