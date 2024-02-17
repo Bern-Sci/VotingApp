@@ -1,18 +1,21 @@
 ﻿using System.Collections.Generic;
 using System;
 using VotingApp;
+using System.Runtime.CompilerServices;
 
 public class Vote
 {
     public List<List<int>> Choices;
     public Voter voter;
     public CandidateList candidateList;
+    public List<Candidate> chosenCandidate;
 
     public Vote(Voter voter, CandidateList candidateList)
     {
         this.Choices = new List<List<int>>();
         this.voter = voter;
         this.candidateList = candidateList;
+        this.chosenCandidate = new List<Candidate>();
     }
 
     public void startVote()
@@ -62,6 +65,7 @@ public class Vote
                 if(choices.Count == 0)
                 {
                     choices.Add(choice - 1);
+                    chosenCandidate.Add(candidates[choice - 1]);
                     maxVotes--;
                 }
                 else
@@ -69,6 +73,7 @@ public class Vote
                     if (choices[0] != choice - 1)
                     {
                         choices.Add(choice - 1);
+                        chosenCandidate.Add(candidates[choice - 1]);
                         maxVotes--;
                     }
                     else
@@ -91,32 +96,12 @@ public class Vote
 
     public void ShowVoteSummary()
     {
-        List<Candidate> Presidents = candidateList.getCandidatesInPos(Position.President);
-        List<Candidate> VicePres = candidateList.getCandidatesInPos(Position.VicePresident);
-        List<Candidate> Secretary = candidateList.getCandidatesInPos(Position.Secretary);
-        List<Candidate> Treasurer = candidateList.getCandidatesInPos(Position.Treasurer);
-        List<Candidate> Auditor = candidateList.getCandidatesInPos(Position.Auditor);
-        List<Candidate> PIO = candidateList.getCandidatesInPos(Position.PIO);
-        List<Candidate> SgtAtArms = candidateList.getCandidatesInPos(Position.SgtAtArms); // Corrected here
-        List<Candidate> FirstYrRep = candidateList.getCandidatesInPos(Position.FirstYrRep);
-        List<Candidate> SecondYrRep = candidateList.getCandidatesInPos(Position.SecondYrRep);
-        List<Candidate> ThirdYrRep = candidateList.getCandidatesInPos(Position.ThirdYrRep);
-        List<Candidate> FourthYrRep = candidateList.getCandidatesInPos(Position.FourthYrRep);
-        List<Candidate> IrregRep = candidateList.getCandidatesInPos(Position.IrregRep);
         Console.Clear();
-        Console.WriteLine("Here are the summary of your votes:");
-        PosSummary(Presidents, 0, 1);
-        PosSummary(VicePres, 1, 1);
-        PosSummary(Secretary, 2, 1);
-        PosSummary(Treasurer, 3, 1);
-        PosSummary(Auditor, 4, 1);
-        PosSummary(PIO, 5, 2);
-        PosSummary(SgtAtArms, 6, 2); 
-        PosSummary(FirstYrRep, 7, 1);
-        PosSummary(SecondYrRep, 8, 1);
-        PosSummary(ThirdYrRep, 9, 1);
-        PosSummary(FourthYrRep, 10, 1);
-        PosSummary(IrregRep, 11, 1);
+        foreach (Candidate c in chosenCandidate)
+        {
+            Console.WriteLine($"{c.pos.ToString()}: {c.Name}");
+        }
+ 
     }
 
 
@@ -128,17 +113,6 @@ public class Vote
             for (int j = 0; j < Choices[i].Count; j++)
                 Console.Write(Choices[i][j] + 1 + ", ");
             Console.WriteLine();
-        }
-    }
-    public void PosSummary(List<Candidate> candidate, int index, int maxVote)
-    {
-        if((maxVote == 1) && candidate.Count > 0)
-        {
-            if (Choices[index][0] != -1)
-            {
-                Console.WriteLine($"Position: {candidate[0].pos} Name: {candidate[index]}");
-            }
-            else Console.WriteLine($"Position: {candidate[0].pos} ABSTAINED!");
         }
     }
 
