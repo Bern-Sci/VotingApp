@@ -39,7 +39,6 @@ public class Vote
     {
         if (candidates.Count == 0)
         {
-            // If there are no candidates, return a list of -1 indicating no votes
             return new List<int>() { 0,0 };
         }
         Position pos = candidates[0].pos;
