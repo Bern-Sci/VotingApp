@@ -1,7 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <ClassDiagram MajorVersion="1" MinorVersion="1">
   <Class Name="Candidate">
-    <Position X="1.5" Y="3.5" Width="1.5" />
+    <Position X="4.75" Y="5.5" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAgAAAAAAAEAAAAAIAAAAAAAAAAAAAgAAAAAAA=</HashCode>
       <FileName>Candidate.cs</FileName>
@@ -11,7 +11,7 @@
     </ShowAsAssociation>
   </Class>
   <Class Name="VotingApp.CandidateList">
-    <Position X="11" Y="0.75" Width="1.5" />
+    <Position X="15.75" Y="2.25" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAABIAAAAAAAAAAAAAAAAAIAAACAAAAAAAAA=</HashCode>
       <FileName>CandidateList.cs</FileName>
@@ -21,9 +21,9 @@
     </ShowAsCollectionAssociation>
   </Class>
   <Class Name="VotingApp.Login">
-    <Position X="14.25" Y="3.25" Width="1.5" />
+    <Position X="13.25" Y="8" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAAAAQABAAAAAAAAAAAAAAAACAAIAAAAAA=</HashCode>
+      <HashCode>AAAAAAAAAAAAAAQABAAAAAQAAAAAAAAAACAAIAAAAAA=</HashCode>
       <FileName>Login.cs</FileName>
     </TypeIdentifier>
     <ShowAsCollectionAssociation>
@@ -32,21 +32,21 @@
     </ShowAsCollectionAssociation>
   </Class>
   <Class Name="VotingApp.Student">
-    <Position X="4.5" Y="0.5" Width="1.5" />
+    <Position X="7" Y="2" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAAAAAAAAQAAAAAAAACAAAAAAACAAA=</HashCode>
       <FileName>Student.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="VotingApp.Voter">
-    <Position X="3.75" Y="6.25" Width="1.5" />
+    <Position X="2.5" Y="3.75" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAEAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>Voter.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="VotingApp.VoterList">
-    <Position X="11.5" Y="5.25" Width="1.5" />
+    <Position X="15.75" Y="5.5" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAgAAAAAAAAQAEAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>VoterList.cs</FileName>
@@ -56,9 +56,9 @@
     </ShowAsCollectionAssociation>
   </Class>
   <Class Name="Vote">
-    <Position X="6.75" Y="3" Width="1.5" />
+    <Position X="10.25" Y="2.25" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AQAAAAAIAAAAAAQABAAAAAAAAAAAAAAAQAAAAAAAAAA=</HashCode>
+      <HashCode>AQAAAAIKAAAAAAQABAAAAAAAAAAAAIAAQAAAAAAQAAA=</HashCode>
       <FileName>Vote.cs</FileName>
     </TypeIdentifier>
     <ShowAsAssociation>
