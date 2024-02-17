@@ -137,7 +137,6 @@ public class Vote
             else if (success && choice > 0 && choice == samePosCandidate.Count + 1)
                 remainingVotes--;
         }
-
     }
 
     public void ShowVoteSummary()
