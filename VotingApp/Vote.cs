@@ -161,30 +161,6 @@ public class Vote
 
     public void VoteAgain()
     {
-        Console.WriteLine("Enter a position to vote again (1-12)");
-        int index = int.Parse(Console.ReadLine());
-   
-        while (index < 1 || index > 12)
-        {
-            Console.Write("Please enter a valid index (1-12): ");
-            index = int.Parse(Console.ReadLine());
-        }
-        List<Candidate> candidates = new List<Candidate>();
-        int maxVote;
-        if (index == 1) candidates = candidateList.getCandidatesInPos(Position.President);
-        if (index == 2) candidates = candidateList.getCandidatesInPos(Position.VicePresident);
-        if (index == 3) candidates = candidateList.getCandidatesInPos(Position.Secretary);
-        if (index == 4) candidates = candidateList.getCandidatesInPos(Position.Treasurer);
-        if (index == 5) candidates = candidateList.getCandidatesInPos(Position.Auditor);
-        if (index == 6) candidates = candidateList.getCandidatesInPos(Position.PIO);
-        if (index == 7) candidates = candidateList.getCandidatesInPos(Position.SgtAtArms);
-        if (index == 8) candidates = candidateList.getCandidatesInPos(Position.FirstYrRep);
-        if (index == 9) candidates = candidateList.getCandidatesInPos(Position.SecondYrRep);
-        if (index == 10) candidates = candidateList.getCandidatesInPos(Position.ThirdYrRep);
-        if (index == 11) candidates = candidateList.getCandidatesInPos(Position.FourthYrRep);
-        if (candidates[0].pos == Position.PIO || candidates[0].pos == Position.SgtAtArms)
-            maxVote = 2;
-        else maxVote = 1;
-        VoteForCandidateInPos(candidates, maxVote);
+       
     }
 }
