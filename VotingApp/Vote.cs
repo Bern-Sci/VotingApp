@@ -56,11 +56,28 @@ public class Vote
 
             string temp = Console.ReadLine();
             bool success = int.TryParse(temp, out int choice); //Mo test if ang user input is lesser than sa number of candidates
-
+                                                
             if (success && choice > 0 && choice <= candidates.Count)
             {
-                choices.Add(choice - 1);
-                maxVotes--;
+                if(choices.Count == 0)
+                {
+                    choices.Add(choice - 1);
+                    maxVotes--;
+                }
+                else
+                {
+                    if (choices[0] != choice - 1)
+                    {
+                        choices.Add(choice - 1);
+                        maxVotes--;
+                    }
+                    else
+                    {
+                        Console.WriteLine("You cannot vote the same candidate twice..");
+                        Console.ReadKey();
+                    }
+                }
+
             }
             else if (success && choice > 0 && choice == candidates.Count + 1)
             {
