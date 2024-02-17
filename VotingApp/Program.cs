@@ -10,16 +10,20 @@ namespace VotingApp
     {
         static void Main(string[] args)
         {
-            CandidateList candidateList = new CandidateList("D:\\CandidateList\\Candidates.txt");
-            VoterList voters = new VoterList("D:\\CandidateList\\VoterList.txt");
+            //Demo puposes
+            //Mo kuha ang candidateList ug voterList sa tanan candidates ug voters gikan sa text file
+            CandidateList candidateList = new CandidateList("Candidates.txt");
+            VoterList voters = new VoterList("VoterList.txt");
+            //Then after kuhaon ni Login ang objects, for checking if ni exist ba na sila
             Login newLog = new Login(candidateList, voters);
+            //Login na ari na part, mo return si newLog ug Voter if VALID ang credentials
             Voter Name = newLog.LoginPrompt();
+            //Start na ug vote
             Vote Vote1 = new Vote(Name, candidateList);
             Vote1.startVote();
-            if(Vote1.ShowVoteSummary() == true)
-            {
+            //If naay prompt na mogawas, type capital Y, kay mo bug pa siya
+            if(Vote1.ShowVoteSummary())
                 Vote1.VoteAgain();
-            }
             Vote1.ShowVoteSummary();
             Console.ReadLine();
         }
