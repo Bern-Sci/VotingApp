@@ -61,9 +61,10 @@ namespace VotingApp
             }
         }
 
+
         private void SaveChangesToFile()
         {
-            string filePath = "VoterList.txt";
+            string filePath = "D:\\CandidateList\\VoterList.txt";
             File.WriteAllLines(filePath, voters.Select(v => $"{v.Name} {v.StudentId} {v.Password} {v.canVote}"));
         }
 

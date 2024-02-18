@@ -229,7 +229,7 @@ public class Vote
     public void RecordVote()
     {
         // Provide the path to your desired text file
-        string filePath = "VoteRecord.txt";
+        string filePath = "D:\\CandidateList\\VoteResult.txt";
         if (voter.canVote == true)
         {
             // Open the file in append mode, so it doesn't overwrite the existing content
