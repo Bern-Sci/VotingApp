@@ -2,6 +2,7 @@
 using System;
 using VotingApp;
 using System.Runtime.CompilerServices;
+using System.Diagnostics;
 
 public class Vote
 {
@@ -31,14 +32,13 @@ public class Vote
         Choices.Add(VoteForCandidateInPos(candidateList.getCandidatesInPos(Position.SecondYrRep), 1));
         Choices.Add(VoteForCandidateInPos(candidateList.getCandidatesInPos(Position.ThirdYrRep), 1));
         Choices.Add(VoteForCandidateInPos(candidateList.getCandidatesInPos(Position.FourthYrRep), 1));
-        Choices.Add(VoteForCandidateInPos(candidateList.getCandidatesInPos(Position.IrregRep), 1));
+
     }
 
     private List<int> VoteForCandidateInPos(List<Candidate> candidates, int maxVotes)
     {
         if (candidates.Count == 0)
         {
-            // If there are no candidates, return a list of -1 indicating no votes
             return new List<int>() { 0,0 };
         }
         Position pos = candidates[0].pos;
@@ -86,12 +86,16 @@ public class Vote
             }
             else if (success && choice > 0 && choice == candidates.Count + 1)
             {
+                Candidate AbstainCandidate = new Candidate("ABSTAINED", "ABSTAINED", "ABSTAINED", candidates[0].pos);
+                chosenCandidate.Add(AbstainCandidate);
                 choices.Add(-1);
                 maxVotes--;
             }
         }
         return choices;
     }
+
+
     public void changeVoteInThisPos(Position position)
     {
         List<int> indexOfPos = new List<int>();
@@ -138,28 +142,77 @@ public class Vote
                 remainingVotes--;
         }
     }
-
-    public void ShowVoteSummary()
+    
+    public bool ShowVoteSummary()
     {
         Console.Clear();
+        int ctr = 0;
+        
         foreach (Candidate c in chosenCandidate)
-        {
-            Console.WriteLine($"{c.pos.ToString()}: {c.Name}");
-        }
- 
+            Console.WriteLine($"{ctr++}. {c.pos.ToString()}: {c.Name}");
+        
+        Console.WriteLine("Vote again? Y/N (Any Key)");
+        string res = Console.ReadLine();
+        res.ToUpper();
+        if (res[0] == 'Y') return true;
+        else return false;
     }
 
 
-    public void disp2dArr()
+    public void VoteAgain()
     {
         Console.Clear();
-        for(int i = 0; i < Choices.Count; i++) 
+        Array allpos = Enum.GetValues(typeof(Position));
+        int ctr = 1;
+        Console.WriteLine("Choose a position you want to change vote");
+        foreach (Position cpos in allpos)
+            Console.WriteLine($"{ctr++}. {cpos}");
+        int index = int.Parse(Console.ReadLine());
+        if (index < 1 || index > allpos.Length)
         {
-            for (int j = 0; j < Choices[i].Count; j++)
-                Console.Write(Choices[i][j] + 1 + ", ");
-            Console.WriteLine();
+            Console.WriteLine("Your input is not recognized.Please try again!");
+            Console.ReadKey();
+            VoteAgain();
+        }
+
+        switch (index)
+        {
+            case 1:
+                changeVoteInThisPos(Position.President);
+                break;
+            case 2:
+                changeVoteInThisPos(Position.VicePresident);
+                break;
+            case 3:
+                changeVoteInThisPos(Position.Secretary);
+                break;
+            case 4:
+                changeVoteInThisPos(Position.Treasurer);
+                break;
+            case 5:
+                changeVoteInThisPos(Position.Auditor);
+                break;
+            case 6:
+                changeVoteInThisPos(Position.PIO);
+                break;
+            case 7:
+                changeVoteInThisPos(Position.SgtAtArms);
+                break;
+            case 8:
+                changeVoteInThisPos(Position.FirstYrRep);
+                break;
+            case 9:
+                changeVoteInThisPos(Position.SecondYrRep);
+                break;
+            case 10:
+                changeVoteInThisPos(Position.ThirdYrRep);
+                break;
+            case 11:
+                changeVoteInThisPos(Position.FourthYrRep);
+                break;
+            case 12:
+                changeVoteInThisPos(Position.IrregRep);
+                break;
         }
     }
-
-
 }
