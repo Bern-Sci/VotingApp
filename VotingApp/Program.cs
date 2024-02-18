@@ -10,8 +10,8 @@ namespace VotingApp
     {
         static void Main(string[] args)
         {
-            CandidateList candidateList = new CandidateList("D:\\CandidateList\\Candidates.txt");
-            VoterList voters = new VoterList("D:\\CandidateList\\VoterList.txt");
+            CandidateList candidateList = new CandidateList("Candidates.txt");
+            VoterList voters = new VoterList("VoterList.txt");
 
             while (true)
             {
