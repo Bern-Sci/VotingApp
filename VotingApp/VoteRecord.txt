@@ -25,18 +25,3 @@ SgtAtArms: ABSTAINED
 FirstYrRep: ABSTAINED
 SecondYrRep: Emily Davis
 ThirdYrRep: ABSTAINED
-
- 20-01-02139:
-President: Benjamin Turner
-VicePresident: Liam Lee
-Secretary: ABSTAINED
-Treasurer: John Smith
-Auditor: Amelia White
-PIO: Michael Miller
-PIO: Emma Harris
-SgtAtArms: Sophia Taylor
-SgtAtArms: Alexander Moore
-FirstYrRep: Jessica White
-SecondYrRep: Sophia Garcia
-ThirdYrRep: Ethan Wilson
-
