@@ -143,24 +143,75 @@ public class Vote
         }
     }
     
-    public bool ShowVoteSummary()
-    {
-        Console.Clear();
-        int ctr = 0;
-        
-        foreach (Candidate c in chosenCandidate)
-            Console.WriteLine($"{ctr++}. {c.pos.ToString()}: {c.Name}");
-        
-        Console.WriteLine("Vote again? Y/N (Any Key)");
-        string res = Console.ReadLine();
-        res.ToUpper();
-        if (res[0] == 'Y') return true;
-        else return false;
-    }
+  public bool ShowVoteSummary()
+ {
+     Console.Clear();
+     int ctr = 0;
+     foreach (Candidate c in chosenCandidate)
+     {
+         Console.WriteLine($"{ctr++}. {c.pos.ToString()}: {c.Name}");
+     }
+     Console.WriteLine("Vote again? Y/N (Any Key)");
+     char res = Console.ReadKey().KeyChar;
+     if (char.ToUpper(res) == 'Y') return true;
+     else return false;
+ }
 
 
     public void VoteAgain()
     {
-       
+        Console.Clear();
+        Array allpos = Enum.GetValues(typeof(Position));
+        int ctr = 1;
+        Console.WriteLine("Choose a position you want to change vote");
+        foreach (Position cpos in allpos)
+            Console.WriteLine($"{ctr++}. {cpos}");
+        int index = int.Parse(Console.ReadLine());
+        if (index < 1 || index > allpos.Length)
+        {
+            Console.WriteLine("Your input is not recognized.Please try again!");
+            Console.ReadKey();
+            VoteAgain();
+        }
+
+        switch (index)
+        {
+            case 1:
+                changeVoteInThisPos(Position.President);
+                break;
+            case 2:
+                changeVoteInThisPos(Position.VicePresident);
+                break;
+            case 3:
+                changeVoteInThisPos(Position.Secretary);
+                break;
+            case 4:
+                changeVoteInThisPos(Position.Treasurer);
+                break;
+            case 5:
+                changeVoteInThisPos(Position.Auditor);
+                break;
+            case 6:
+                changeVoteInThisPos(Position.PIO);
+                break;
+            case 7:
+                changeVoteInThisPos(Position.SgtAtArms);
+                break;
+            case 8:
+                changeVoteInThisPos(Position.FirstYrRep);
+                break;
+            case 9:
+                changeVoteInThisPos(Position.SecondYrRep);
+                break;
+            case 10:
+                changeVoteInThisPos(Position.ThirdYrRep);
+                break;
+            case 11:
+                changeVoteInThisPos(Position.FourthYrRep);
+                break;
+            case 12:
+                changeVoteInThisPos(Position.IrregRep);
+                break;
+        }
     }
 }
