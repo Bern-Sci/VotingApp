@@ -20,7 +20,7 @@ namespace VotingApp
 
         public override string ToString()
         {
-            return "\nStudentID: " + this.StudentId;
+            return "\nStudent ID: " + this.StudentId;
         }
     }
     
