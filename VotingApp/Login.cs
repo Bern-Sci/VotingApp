@@ -22,9 +22,7 @@ namespace VotingApp
             foreach (Candidate candidate in candidates)
             {
                 if (candidate.StudentId == studentId)
-                {
                     return false;
-                }
             }
 
             foreach (Voter voter in voters)

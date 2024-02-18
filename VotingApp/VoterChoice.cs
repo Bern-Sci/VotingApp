@@ -28,9 +28,6 @@ namespace VotingApp
             List <Candidate> ThirdYrRep = getCandidatesInPos(Position.ThirdYrRep);
             List <Candidate> FourthYrRep = getCandidatesInPos(Position.FourthYrRep);
             List <Candidate> IrregRep = getCandidatesInPos(Position.IrregRep);
-
-
-
             return choices;
         }
     }
