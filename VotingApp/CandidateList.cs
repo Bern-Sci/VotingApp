@@ -55,6 +55,6 @@ namespace VotingApp
             }
             return candidatesInPos;
         }
-
+        
     }
 }

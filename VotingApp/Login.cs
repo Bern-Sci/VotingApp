@@ -8,8 +8,8 @@ namespace VotingApp
 {
     public class Login
     {
-        private List<Candidate> candidates;
-        private List<Voter> voters;
+        public List<Candidate> candidates { get; private set; }
+        public List<Voter> voters { get; private set; }
 
         public Login(CandidateList candidateList, VoterList voterList)
         {
@@ -29,9 +29,14 @@ namespace VotingApp
 
             foreach (Voter voter in voters)
             {
-                if (voter.StudentId == studentId && voter.Password == password)
+                if (voter.StudentId == studentId && voter.Password == password && voter.canVote)
                 {
                     return true;
+                }
+                else if(voter.StudentId == studentId && voter.Password == password && voter.canVote == false)
+                {
+                    Console.WriteLine("You have already voted!");
+                    return false;
                 }
             }
 
@@ -42,8 +47,9 @@ namespace VotingApp
         {
             bool isLoggedIn = false;
             string sId = "";
-            while(isLoggedIn == false)
+            while (isLoggedIn == false)
             {
+                Console.Clear();
                 Console.Write("Student ID: ");
                 sId = Console.ReadLine();
                 Console.Write("\nPassword: ");
@@ -58,6 +64,15 @@ namespace VotingApp
                 }
             }
             return new Voter(sId);
+        }
+
+
+        public void dispAllVoter() 
+        {
+            foreach (Voter v in voters)
+            {
+                Console.WriteLine($"{v.Name} {v}, Can vote: {v.canVote}");
+            }
         }
     }
 }

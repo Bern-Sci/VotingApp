@@ -12,16 +12,24 @@ namespace VotingApp
         {
             CandidateList candidateList = new CandidateList("D:\\CandidateList\\Candidates.txt");
             VoterList voters = new VoterList("D:\\CandidateList\\VoterList.txt");
-            Login newLog = new Login(candidateList, voters);
-            Voter Name = newLog.LoginPrompt();
-            Vote Vote1 = new Vote(Name, candidateList);
-            Vote1.startVote();
-            if(Vote1.ShowVoteSummary() == true)
+
+            while (true)
             {
-                Vote1.VoteAgain();
+                Console.Clear();
+                Login newLog = new Login(candidateList, voters);
+                Voter Name = newLog.LoginPrompt();
+                Vote Vote1 = new Vote(Name, candidateList);
+                Vote1.startVote();
+                while (Vote1.ShowVoteSummary())
+                {
+                    Vote1.VoteAgain();
+                }
+                Console.Clear();
+                voters.MarkVoterAsVoted(Name.StudentId);
+                Vote1.RecordVote();
+                Console.ReadKey();
             }
-            Vote1.ShowVoteSummary();
-            Console.ReadLine();
+         
         }
     }
 }

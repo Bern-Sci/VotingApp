@@ -3,6 +3,7 @@ using System;
 using VotingApp;
 using System.Runtime.CompilerServices;
 using System.Diagnostics;
+using System.IO;
 
 public class Vote
 {
@@ -32,14 +33,13 @@ public class Vote
         Choices.Add(VoteForCandidateInPos(candidateList.getCandidatesInPos(Position.SecondYrRep), 1));
         Choices.Add(VoteForCandidateInPos(candidateList.getCandidatesInPos(Position.ThirdYrRep), 1));
         Choices.Add(VoteForCandidateInPos(candidateList.getCandidatesInPos(Position.FourthYrRep), 1));
-
     }
 
     private List<int> VoteForCandidateInPos(List<Candidate> candidates, int maxVotes)
     {
         if (candidates.Count == 0)
         {
-            return new List<int>() { 0,0 };
+            return new List<int>() { 0, 0 };
         }
         Position pos = candidates[0].pos;
         List<int> choices = new List<int>();
@@ -47,6 +47,7 @@ public class Vote
         while (maxVotes > 0)
         {
             Console.Clear();
+            Console.WriteLine($"Currently logged in: {voter.StudentId}");
             Console.WriteLine($"Position: {pos} - Remaining Votes: {maxVotes}");
             Console.WriteLine("Choose a candidate to vote:");
             int counter = 1;
@@ -59,10 +60,10 @@ public class Vote
 
             string temp = Console.ReadLine();
             bool success = int.TryParse(temp, out int choice); //Mo test if ang user input is lesser than sa number of candidates
-                                                
+
             if (success && choice > 0 && choice <= candidates.Count)
             {
-                if(choices.Count == 0)
+                if (choices.Count == 0)
                 {
                     choices.Add(choice - 1);
                     chosenCandidate.Add(candidates[choice - 1]);
@@ -96,61 +97,144 @@ public class Vote
     }
 
 
+    public void changeVoteInThisPos(Position position)
+    {
+        List<int> indexOfPos = new List<int>();
+        //kuhaon ang index sa candidate nga ang position kay equal sa position parameter
+        for (int i = 0; i < chosenCandidate.Count; i++)
+            if (chosenCandidate[i].pos.Equals(position))
+            {
+                indexOfPos.Add(i);
+                chosenCandidate[i] = null; //diko sure og diba ni mag memory leak. ichange nalang basta dapat ma null value
+            }
+        //Para ng babaw maedit ang value sa index diha sa chosenCandidate
+        int index = 0; //index ctr sa indexOfPos
+
+        List<Candidate> samePosCandidate = candidateList.getCandidatesInPos(position);
+        int remainingVotes = indexOfPos.Count;
+        while (remainingVotes != 0)
+        {
+            Console.Clear();
+            Console.WriteLine($"Position: {position.ToString()} - Remaining Votes: {remainingVotes}");
+            Console.WriteLine("Choose a candidate to vote:");
+
+            int ctr = 1;
+            foreach (Candidate c in samePosCandidate)
+                Console.WriteLine($"{ctr++}. {c.Name}");
+            Console.WriteLine($"{ctr}. ABSTAIN");
+
+            string temp = Console.ReadLine();
+            bool success = int.TryParse(temp, out int choice);
+            if (success && choice > 0 && choice < samePosCandidate.Count + 1)
+            {
+                if (chosenCandidate[indexOfPos[index]] == null)
+                {
+                    chosenCandidate[indexOfPos[index]] = samePosCandidate[choice - 1];
+                    index++;
+                    remainingVotes--;
+                }
+                else
+                {
+                    Console.WriteLine("You cannot vote the same candidate twice..");
+                    Console.ReadKey();
+                }
+            }
+            else if (success && choice > 0 && choice == samePosCandidate.Count + 1)
+                remainingVotes--;
+        }
+    }
+
     public bool ShowVoteSummary()
     {
         Console.Clear();
         int ctr = 0;
         foreach (Candidate c in chosenCandidate)
         {
-            Console.WriteLine($"{ctr++}. {c.pos.ToString()}: {c.Name}");
+            Console.WriteLine($"{++ctr}. {c.pos.ToString()}: {c.Name}");
         }
         Console.WriteLine("Vote again? Y/N (Any Key)");
         string res = Console.ReadLine();
-        res.ToUpper();
-        if (res[0] == 'Y') return true;
+        if (res.ToUpper() == "Y") return true;
         else return false;
-        
     }
 
 
-    public void disp2dArr()
-    {
-        Console.Clear();
-        for(int i = 0; i < Choices.Count; i++) 
-        {
-            for (int j = 0; j < Choices[i].Count; j++)
-                Console.Write(Choices[i][j] + 1 + ", ");
-            Console.WriteLine();
-        }
-    }
 
     public void VoteAgain()
     {
-        Console.WriteLine("Enter a position to vote again (1-12)");
+        Console.Clear();
+        Array allpos = Enum.GetValues(typeof(Position));
+        int ctr = 1;
+        Console.WriteLine("Choose a position you want to change vote");
+        foreach (Position cpos in allpos)
+            Console.WriteLine($"{ctr++}. {cpos}");
         int index = int.Parse(Console.ReadLine());
-   
-        while (index < 1 || index > 12)
+        if (index < 1 || index > allpos.Length)
         {
-            Console.Write("Please enter a valid index (1-12): ");
-            index = int.Parse(Console.ReadLine());
+            Console.WriteLine("Your input is not recognized.Please try again!");
+            Console.ReadKey();
+            VoteAgain();
         }
-        List<Candidate> candidates = new List<Candidate>();
-        int maxVote;
-        if (index == 1) candidates = candidateList.getCandidatesInPos(Position.President);
-        if (index == 2) candidates = candidateList.getCandidatesInPos(Position.VicePresident);
-        if (index == 3) candidates = candidateList.getCandidatesInPos(Position.Secretary);
-        if (index == 4) candidates = candidateList.getCandidatesInPos(Position.Treasurer);
-        if (index == 5) candidates = candidateList.getCandidatesInPos(Position.Auditor);
-        if (index == 6) candidates = candidateList.getCandidatesInPos(Position.PIO);
-        if (index == 7) candidates = candidateList.getCandidatesInPos(Position.SgtAtArms);
-        if (index == 8) candidates = candidateList.getCandidatesInPos(Position.FirstYrRep);
-        if (index == 9) candidates = candidateList.getCandidatesInPos(Position.SecondYrRep);
-        if (index == 10) candidates = candidateList.getCandidatesInPos(Position.ThirdYrRep);
-        if (index == 11) candidates = candidateList.getCandidatesInPos(Position.FourthYrRep);
-        if (candidates[0].pos == Position.PIO || candidates[0].pos == Position.SgtAtArms)
-            maxVote = 2;
-        else maxVote = 1;
-        VoteForCandidateInPos(candidates, maxVote);
+
+        switch (index)
+        {
+            case 1:
+                changeVoteInThisPos(Position.President);
+                break;
+            case 2:
+                changeVoteInThisPos(Position.VicePresident);
+                break;
+            case 3:
+                changeVoteInThisPos(Position.Secretary);
+                break;
+            case 4:
+                changeVoteInThisPos(Position.Treasurer);
+                break;
+            case 5:
+                changeVoteInThisPos(Position.Auditor);
+                break;
+            case 6:
+                changeVoteInThisPos(Position.PIO);
+                break;
+            case 7:
+                changeVoteInThisPos(Position.SgtAtArms);
+                break;
+            case 8:
+                changeVoteInThisPos(Position.FirstYrRep);
+                break;
+            case 9:
+                changeVoteInThisPos(Position.SecondYrRep);
+                break;
+            case 10:
+                changeVoteInThisPos(Position.ThirdYrRep);
+                break;
+            case 11:
+                changeVoteInThisPos(Position.FourthYrRep);
+                break;
+        }
     }
 
+    public void RecordVote()
+    {
+        // Provide the path to your desired text file
+        string filePath = "D:\\CandidateList\\VoteRecord.txt";
+        if (voter.canVote == true)
+        {
+            // Open the file in append mode, so it doesn't overwrite the existing content
+            using (StreamWriter writer = new StreamWriter(filePath, true))
+            {
+                writer.WriteLine($"{voter.Name} {voter.StudentId}:");
+                foreach (Candidate c in chosenCandidate)
+                {
+                    if (c != null)
+                        writer.WriteLine($"{c.pos.ToString()}: {c.Name}");
+                }
+                writer.WriteLine();
+            }
+
+            Console.WriteLine("Vote recorded successfully!");
+            Console.ReadKey();
+        }
+        else return;
+    }
 }

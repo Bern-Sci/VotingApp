@@ -8,6 +8,6 @@ namespace VotingApp
 {
     public enum Position
     {
-        President, VicePresident, Secretary, Treasurer, Auditor, PIO, SgtAtArms, FirstYrRep, SecondYrRep, ThirdYrRep, FourthYrRep, IrregRep
+        President, VicePresident, Secretary, Treasurer, Auditor, PIO, SgtAtArms, FirstYrRep, SecondYrRep, ThirdYrRep, FourthYrRep
     }
 }
