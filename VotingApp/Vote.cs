@@ -100,18 +100,23 @@ public class Vote
     public void changeVoteInThisPos(Position position)
     {
         List<int> indexOfPos = new List<int>();
-        //kuhaon ang index sa candidate nga ang position kay equal sa position parameter
+
+        // Get the indices of candidates with the specified position
         for (int i = 0; i < chosenCandidate.Count; i++)
+        {
             if (chosenCandidate[i].pos.Equals(position))
             {
                 indexOfPos.Add(i);
-                chosenCandidate[i] = null; //diko sure og diba ni mag memory leak. ichange nalang basta dapat ma null value
+                chosenCandidate[i] = null; // Set the candidate to null
             }
-        //Para ng babaw maedit ang value sa index diha sa chosenCandidate
-        int index = 0; //index ctr sa indexOfPos
+        }
+
+        // Modify the values at the specified indices
+        int index = 0;
 
         List<Candidate> samePosCandidate = candidateList.getCandidatesInPos(position);
         int remainingVotes = indexOfPos.Count;
+
         while (remainingVotes != 0)
         {
             Console.Clear();
@@ -125,6 +130,7 @@ public class Vote
 
             string temp = Console.ReadLine();
             bool success = int.TryParse(temp, out int choice);
+
             if (success && choice > 0 && choice < samePosCandidate.Count + 1)
             {
                 if (chosenCandidate[indexOfPos[index]] == null)
@@ -140,9 +146,15 @@ public class Vote
                 }
             }
             else if (success && choice > 0 && choice == samePosCandidate.Count + 1)
+            {
+                // Create an AbstainCandidate and set it at the specified index
+                chosenCandidate[indexOfPos[index]] = new Candidate("ABSTAINED", "ABSTAINED", "ABSTAINED", position);
+                index++;
                 remainingVotes--;
+            }
         }
     }
+
 
     public bool ShowVoteSummary()
     {
