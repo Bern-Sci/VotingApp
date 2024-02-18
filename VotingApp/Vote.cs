@@ -146,16 +146,20 @@ public class Vote
     public bool ShowVoteSummary()
     {
         Console.Clear();
-        int ctr = 0;
+        int ctr = 1;
         
         foreach (Candidate c in chosenCandidate)
-            Console.WriteLine($"{ctr++}. {c.pos.ToString()}: {c.Name}");
+            Console.WriteLine($"{ctr++}.{c.pos.ToString()}: {c.Name}");
         
         Console.WriteLine("Vote again? Y/N (Any Key)");
-        string res = Console.ReadLine();
-        res.ToUpper();
-        if (res[0] == 'Y') return true;
-        else return false;
+        char res = Console.ReadKey().KeyChar;
+        
+        if (res == 'Y' || res == 'y')
+        {
+            VoteAgain();
+            return true;
+        }
+        return false;
     }
 
 
@@ -214,5 +218,6 @@ public class Vote
                 changeVoteInThisPos(Position.IrregRep);
                 break;
         }
+        ShowVoteSummary();
     }
 }
