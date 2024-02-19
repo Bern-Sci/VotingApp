@@ -59,8 +59,7 @@ public class Vote
             Console.WriteLine($"{counter}. ABSTAIN");
 
             string temp = Console.ReadLine();
-            bool success = int.TryParse(temp, out int choice); //Mo test if ang user input is lesser than sa number of candidates
-
+            bool success = int.TryParse(temp, out int choice); 
             if (success && choice > 0 && choice <= candidates.Count)
             {
                 if (choices.Count == 0)
