@@ -26,16 +26,18 @@ namespace VotingApp
             foreach (string line in lines)
             {
                 string[] parts = line.Split(' ');
-                if (parts.Length == 4)
+                if (parts.Length == 5)
                 {
                     string name = parts[0] + " " + parts[1];
                     string sID = parts[2];
                     string pass = parts[3];
-                    Voter voter = new Voter(name, sID, pass);
+                    bool canVote = bool.Parse(parts[4]);
+                    Voter voter = new Voter(name, sID, pass, canVote);
                     voters.Add(voter);
                 }
             }
         }
+
         public void showVoters()
         {
             foreach (Voter voter in voters)
@@ -44,6 +46,28 @@ namespace VotingApp
             }
             Console.WriteLine("Total: " + this.voters.Count());
         }
+
+        public void MarkVoterAsVoted(string studentId)
+        {
+            Voter voter = voters.Find(v => v.StudentId == studentId);
+            if (voter != null)
+            {
+                voter.canVote = false;
+                SaveChangesToFile(); // Save the changes to the file
+            }
+            else
+            {
+                Console.WriteLine($"Voter with ID {studentId} not found.");
+            }
+        }
+
+
+        private void SaveChangesToFile()
+        {
+            string filePath = "C:\\Users\\Joerick Amadora\\source\\repository\\Bern-Sci\\VotingApp\\VotingApp\\VoterList.txt";
+            File.WriteAllLines(filePath, voters.Select(v => $"{v.Name} {v.StudentId} {v.Password} {v.canVote}"));
+        }
+
 
     }
 }

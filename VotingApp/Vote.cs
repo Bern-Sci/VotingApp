@@ -3,6 +3,7 @@ using System;
 using VotingApp;
 using System.Runtime.CompilerServices;
 using System.Diagnostics;
+using System.IO;
 
 public class Vote
 {
@@ -32,14 +33,13 @@ public class Vote
         Choices.Add(VoteForCandidateInPos(candidateList.getCandidatesInPos(Position.SecondYrRep), 1));
         Choices.Add(VoteForCandidateInPos(candidateList.getCandidatesInPos(Position.ThirdYrRep), 1));
         Choices.Add(VoteForCandidateInPos(candidateList.getCandidatesInPos(Position.FourthYrRep), 1));
-
     }
 
     private List<int> VoteForCandidateInPos(List<Candidate> candidates, int maxVotes)
     {
         if (candidates.Count == 0)
         {
-            return new List<int>() { 0,0 };
+            return new List<int>() { 0, 0 };
         }
         Position pos = candidates[0].pos;
         List<int> choices = new List<int>();
@@ -47,6 +47,7 @@ public class Vote
         while (maxVotes > 0)
         {
             Console.Clear();
+            Console.WriteLine($"Currently logged in: {voter.StudentId}");
             Console.WriteLine($"Position: {pos} - Remaining Votes: {maxVotes}");
             Console.WriteLine("Choose a candidate to vote:");
             int counter = 1;
@@ -58,11 +59,10 @@ public class Vote
             Console.WriteLine($"{counter}. ABSTAIN");
 
             string temp = Console.ReadLine();
-            bool success = int.TryParse(temp, out int choice); //Mo test if ang user input is lesser than sa number of candidates
-                                                
+            bool success = int.TryParse(temp, out int choice); 
             if (success && choice > 0 && choice <= candidates.Count)
             {
-                if(choices.Count == 0)
+                if (choices.Count == 0)
                 {
                     choices.Add(choice - 1);
                     chosenCandidate.Add(candidates[choice - 1]);
@@ -99,18 +99,23 @@ public class Vote
     public void changeVoteInThisPos(Position position)
     {
         List<int> indexOfPos = new List<int>();
-        //kuhaon ang index sa candidate nga ang position kay equal sa position parameter
+
+        // Get the indices of candidates with the specified position
         for (int i = 0; i < chosenCandidate.Count; i++)
+        {
             if (chosenCandidate[i].pos.Equals(position))
             {
                 indexOfPos.Add(i);
-                chosenCandidate[i] = null; //diko sure og diba ni mag memory leak. ichange nalang basta dapat ma null value
+                chosenCandidate[i] = null; // Set the candidate to null
             }
-        //Para ng babaw maedit ang value sa index diha sa chosenCandidate
-        int index = 0; //index ctr sa indexOfPos
+        }
+
+        // Modify the values at the specified indices
+        int index = 0;
 
         List<Candidate> samePosCandidate = candidateList.getCandidatesInPos(position);
         int remainingVotes = indexOfPos.Count;
+
         while (remainingVotes != 0)
         {
             Console.Clear();
@@ -124,6 +129,7 @@ public class Vote
 
             string temp = Console.ReadLine();
             bool success = int.TryParse(temp, out int choice);
+
             if (success && choice > 0 && choice < samePosCandidate.Count + 1)
             {
                 if (chosenCandidate[indexOfPos[index]] == null)
@@ -139,28 +145,30 @@ public class Vote
                 }
             }
             else if (success && choice > 0 && choice == samePosCandidate.Count + 1)
+            {
+                // Create an AbstainCandidate and set it at the specified index
+                chosenCandidate[indexOfPos[index]] = new Candidate("ABSTAINED", "ABSTAINED", "ABSTAINED", position);
+                index++;
                 remainingVotes--;
+            }
         }
     }
-    
+
+
     public bool ShowVoteSummary()
     {
         Console.Clear();
-        int ctr = 1;
-        
+        int ctr = 0;
         foreach (Candidate c in chosenCandidate)
-            Console.WriteLine($"{ctr++}.{c.pos.ToString()}: {c.Name}");
-        
-        Console.WriteLine("Vote again? Y/N (Any Key)");
-        char res = Console.ReadKey().KeyChar;
-        
-        if (res == 'Y' || res == 'y')
         {
-            VoteAgain();
-            return true;
+            Console.WriteLine($"{++ctr}. {c.pos.ToString()}: {c.Name}");
         }
-        return false;
+        Console.WriteLine("Vote again? Y/N (Any Key)");
+        string res = Console.ReadLine();
+        if (res.ToUpper() == "Y") return true;
+        else return false;
     }
+
 
 
     public void VoteAgain()
@@ -214,10 +222,30 @@ public class Vote
             case 11:
                 changeVoteInThisPos(Position.FourthYrRep);
                 break;
-            case 12:
-                changeVoteInThisPos(Position.IrregRep);
-                break;
         }
-        ShowVoteSummary();
+    }
+
+    public void RecordVote()
+    {
+        // Provide the path to your desired text file
+        string filePath = "C:\\Users\\Joerick Amadora\\source\\repository\\Bern-Sci\\VotingApp\\VotingApp\\VoteResult.txt";
+        if (voter.canVote == true)
+        {
+            // Open the file in append mode, so it doesn't overwrite the existing content
+            using (StreamWriter writer = new StreamWriter(filePath, true))
+            {
+                writer.WriteLine($"{voter.Name} {voter.StudentId}:");
+                foreach (Candidate c in chosenCandidate)
+                {
+                    if (c != null)
+                        writer.WriteLine($"{c.pos.ToString()}: {c.Name}");
+                }
+                writer.WriteLine();
+            }
+
+            Console.WriteLine("Vote recorded successfully!");
+            Console.ReadKey();
+        }
+        else return;
     }
 }
