@@ -10,13 +10,16 @@ namespace VotingApp
     {
         static void Main(string[] args)
         {
-            CandidateList candidateList = new CandidateList("D:\\CandidateList\\Candidates.txt");
-            VoterList voters = new VoterList("D:\\CandidateList\\VoterList.txt");
+            Firebase firebase = new Firebase("mk52qYtyN4zDxwDj3VUyQ4b7wCFphnMZ9878ExwM", "https://fir-test-371b2-default-rtdb.firebaseio.com/");
+            CandidateList candidateList = new CandidateList("C:\\Users\\Joerick Amadora\\source\\repository\\Bern-Sci\\VotingApp\\VotingApp\\Candidates.txt");
+            VoterList voterList = new VoterList("C:\\Users\\Joerick Amadora\\source\\repository\\Bern-Sci\\VotingApp\\VotingApp\\VoterList.txt");
 
+            firebase.pushObject("Data/Candidates", candidateList.candidates);
+            firebase.pushObject("Data/Voters", voterList.voters);
             while (true)
             {
                 Console.Clear();
-                Login newLog = new Login(candidateList, voters);
+                Login newLog = new Login(candidateList, voterList);
                 Voter Name = newLog.LoginPrompt();
                 Vote Vote1 = new Vote(Name, candidateList);
                 Vote1.startVote();
@@ -25,7 +28,7 @@ namespace VotingApp
                     Vote1.VoteAgain();
                 }
                 Console.Clear();
-                voters.MarkVoterAsVoted(Name.StudentId);
+                voterList.MarkVoterAsVoted(Name.StudentId);
                 Vote1.RecordVote();
                 Console.ReadKey();
             }
