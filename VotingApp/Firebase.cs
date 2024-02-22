@@ -13,9 +13,9 @@ namespace VotingApp
 {
     public class Firebase
     {
-        public string Auth_secret;
-        public string Base_path;
-        public IFirebaseClient client;
+        public string Auth_secret { get; private set; }
+        public string Base_path { get; private set; }
+        public IFirebaseClient client { get; private set; }
 
         public Firebase(string auth_secret, string base_path)
         {
