@@ -34,7 +34,7 @@ namespace VotingApp
         {
             foreach (Candidate c in candidate)
             {
-                PushResponse response = client.Push(path +"/"+c.Name, c);
+                PushResponse response = client.Push(path +"/", c);
                 if (response == null) { Console.WriteLine("Push Failed..."); }
             }
         }
@@ -42,7 +42,7 @@ namespace VotingApp
         {
             foreach (Voter v in voters)
             {
-                PushResponse response = client.Push(path +"/"+v.Name, v);
+                PushResponse response = client.Push(path +"/", v);
                 if (response == null) { Console.WriteLine("Push Failed..."); }
             }
         }
