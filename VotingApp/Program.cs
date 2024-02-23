@@ -14,8 +14,8 @@ namespace VotingApp
             CandidateList candidateList = new CandidateList("C:\\Users\\Joerick Amadora\\source\\repository\\Bern-Sci\\VotingApp\\VotingApp\\Candidates.txt");
             VoterList voterList = new VoterList("C:\\Users\\Joerick Amadora\\source\\repository\\Bern-Sci\\VotingApp\\VotingApp\\VoterList.txt");
 
-            firebase.pushObject("Data/Candidates", candidateList.candidates);
-            firebase.pushObject("Data/Voters", voterList.voters);
+            firebase.pushListOfObject("Data/Candidates", candidateList.candidates);
+            firebase.pushListOfObject("Data/Voters", voterList.voters);
             while (true)
             {
                 Console.Clear();
@@ -32,7 +32,7 @@ namespace VotingApp
                 Vote1.RecordVote();
                 Console.ReadKey();
             }
-         
+
         }
     }
 }

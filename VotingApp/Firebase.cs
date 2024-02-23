@@ -30,21 +30,27 @@ namespace VotingApp
 
            this.client = new FirebaseClient(config);
         }
-        public void pushObject(string path, List<Candidate> candidate)
+        public void pushListOfObject(string path, List<Candidate> candidate)
         {
             foreach (Candidate c in candidate)
-            {
-                PushResponse response = client.Push(path +"/", c);
-                if (response == null) { Console.WriteLine("Push Failed..."); }
-            }
+                pushObject(path, c);
         }
-        public void pushObject(string path, List<Voter> voters)
+        public void pushListOfObject(string path, List<Voter> voters)
         {
             foreach (Voter v in voters)
-            {
-                PushResponse response = client.Push(path +"/", v);
-                if (response == null) { Console.WriteLine("Push Failed..."); }
-            }
+                pushObject(path, v);
+        }
+        public async void pushObject(string path, Candidate candidate)
+        {
+            path += "/" + candidate.StudentId;
+            SetResponse response = await client.SetTaskAsync(path, candidate);
+            if(response == null) { Console.WriteLine("Failed"); }
+        }
+        public async void pushObject(string path, Voter voter)
+        {
+            path += "/" + voter.StudentId;
+            SetResponse response = await client.SetTaskAsync(path, voter);
+            if (response == null) { Console.WriteLine("Failed"); }
         }
     }
 }
