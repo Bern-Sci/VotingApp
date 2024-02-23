@@ -8,6 +8,7 @@ using FireSharp.Config;
 using FireSharp.Response;
 using FireSharp.Interfaces;
 using FireSharp;
+using FireSharp.Exceptions;
 
 namespace VotingApp
 {
@@ -37,20 +38,37 @@ namespace VotingApp
         }
         public void pushListOfObject(string path, List<Voter> voters)
         {
+           
             foreach (Voter v in voters)
                 pushObject(path, v);
         }
         public async void pushObject(string path, Candidate candidate)
         {
             path += "/" + candidate.StudentId;
+            if(!pathDoesntExist(path))
+                return;
             SetResponse response = await client.SetTaskAsync(path, candidate);
             if(response == null) { Console.WriteLine("Failed"); }
         }
         public async void pushObject(string path, Voter voter)
         {
             path += "/" + voter.StudentId;
+            if (!pathDoesntExist(path))
+                return;
             SetResponse response = await client.SetTaskAsync(path, voter);
             if (response == null) { Console.WriteLine("Failed"); }
+        }
+        public bool pathDoesntExist(string path)
+        { 
+            try
+            {
+                var response = client.GetTaskAsync(path);
+                return true;
+            }
+            catch(FirebaseException)
+            {
+                return false;
+            }
         }
     }
 }
