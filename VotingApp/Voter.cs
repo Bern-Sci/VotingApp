@@ -6,22 +6,14 @@ using System.Threading.Tasks;
 
 namespace VotingApp
 {
-    public class Voter : Student
+    public class Voter
     {
-        //naa dri dapat ang iyang mga na vote
+        public long Code;
+        public YearLevel YearLevel;
         public bool canVote = true;
-        public Voter(string name, string sID, string pass) : base(name, sID, pass) { }
-        public Voter(string name, string sID, string pass, bool canVote) : base(name, sID, pass) 
-        {
-            this.canVote = canVote;
-        }
-        public Voter(string sID, string pass) : base(sID, pass) { }
-        public Voter(string sID) : base(sID) { }
 
-        public override string ToString()
-        {
-            return "\nStudent ID: " + this.StudentId;
-        }
+        public Voter() { }
+        public Voter(YearLevel yr) { this.YearLevel = yr; }
+        public Voter(YearLevel yr, bool canVote, long Code) { this.YearLevel = yr; this.canVote = canVote; this.Code = Code; }
     }
-    
 }

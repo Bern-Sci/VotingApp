@@ -1,23 +1,21 @@
-﻿using VotingApp;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using VotingApp;
 
-public class Candidate : Student
+namespace VotingApp
 {
-    public Position pos { get; private set; }
-    public int RemainingVotes { get; set; }
-
-    public Candidate(string name, string sID, string pass, Position pos) : base(name, sID, pass)
+    public class Candidate
     {
-        this.pos = pos;
-        this.RemainingVotes = GetInitialVotes(pos);
-    }
+        public string Name;
+        public Position pos;
 
-    private int GetInitialVotes(Position pos)
-    {
-        return pos == Position.PIO || pos == Position.SgtAtArms ? 2 : 1;
-    }
-
-    public override string ToString()
-    {
-        return $"{this.Name}";
+        public Candidate(string name, Position pos)
+        {
+            Name = name;
+            this.pos = pos;
+        }
     }
 }

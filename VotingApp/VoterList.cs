@@ -2,72 +2,84 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using FireSharp.Config;
+using FireSharp.Response;
+using FireSharp.Interfaces;
+using System.Threading.Tasks;
+using FireSharp.Exceptions;
 
 namespace VotingApp
 {
     public class VoterList
     {
+        IFirebaseClient client;
+        IFirebaseConfig config;
         public List<Voter> voters { get; private set; }
-
-        public VoterList()
+        public VoterList(string Auth, string Path)
         {
+            config = new FirebaseConfig
+            {
+                AuthSecret = Auth,
+                BasePath = Path
+            };
+            client = new FireSharp.FirebaseClient(config);
+            if (client != null) Console.WriteLine("You are connected!");
+            else Console.WriteLine("Not connected!");
+            Console.Clear();
             voters = new List<Voter>();
         }
 
-        public VoterList(string filePath)
+        public static async Task<VoterList> CreateAsync(string Auth, string Path)
         {
-            this.voters = new List<Voter>();
-            LoadVoters(filePath);
+            var voterList = new VoterList(Auth, Path);
+            await voterList.GetVotersFromDatabase();
+            return voterList;
+            //VoterList voterList = await VoterList.CreateAsync("Auth", "Path");
         }
 
-        public void LoadVoters(string filePath)
+        private async Task GetVotersFromDatabase()
         {
-            string[] lines = File.ReadAllLines(filePath);
-            foreach (string line in lines)
+            FirebaseResponse response = await client.GetTaskAsync("Voter");
+            Dictionary<string, Dictionary<string, Dictionary<string, object>>> data = Newtonsoft.Json.JsonConvert.DeserializeObject<Dictionary<string, Dictionary<string, Dictionary<string, object>>>>(response.Body);
+
+            foreach (var yearLevel in data)
             {
-                string[] parts = line.Split(' ');
-                if (parts.Length == 5)
+                YearLevel yr = (YearLevel)Enum.Parse(typeof(YearLevel), yearLevel.Key);
+                foreach (var voter in yearLevel.Value)
                 {
-                    string name = parts[0] + " " + parts[1];
-                    string sID = parts[2];
-                    string pass = parts[3];
-                    bool canVote = bool.Parse(parts[4]);
-                    Voter voter = new Voter(name, sID, pass, canVote);
-                    voters.Add(voter);
+                    long code = long.Parse(voter.Key);
+                    bool canVote = (bool)voter.Value["canVote"];
+                    Voter newVoter = new Voter(yr, canVote, code);
+                    voters.Add(newVoter);
                 }
             }
         }
 
-        public void showVoters()
+
+        public void displayVoters()
         {
-            foreach (Voter voter in voters)
+            foreach (Voter v in voters)
             {
-                Console.WriteLine(voter);
+                Console.WriteLine(v.Code + $" {v.YearLevel}");
             }
-            Console.WriteLine("Total: " + this.voters.Count());
         }
 
-        public void MarkVoterAsVoted(string studentId)
+        public async Task MarkVoterAsVoted(Voter voter)
         {
-            Voter voter = voters.Find(v => v.StudentId == studentId);
-            if (voter != null)
+            try
             {
+                FirebaseResponse response = await client.GetTaskAsync($"Voter/{voter.YearLevel}/{voter.Code}");
+                Dictionary<string, object> voterFromDb = response.ResultAs<Dictionary<string, object>>();
+                voterFromDb["canVote"] = false;
+                SetResponse setResponse = await client.SetTaskAsync($"Voter/{voter.YearLevel}/{voter.Code}", voterFromDb);
+                Console.WriteLine($"Voter with code {voter.Code} has been marked as voted");
                 voter.canVote = false;
-                SaveChangesToFile(); // Save the changes to the file
             }
-            else
+            catch (FirebaseException ex)
             {
-                Console.WriteLine($"Voter with ID {studentId} not found.");
+                Console.WriteLine($"Failed to mark voter with code {voter.Code} as voted. Error: {ex.Message}");
             }
         }
-
-
-        private void SaveChangesToFile()
-        {
-            string filePath = "D:\\CandidateList\\VoterList.txt";
-            File.WriteAllLines(filePath, voters.Select(v => $"{v.Name} {v.StudentId} {v.Password} {v.canVote}"));
-        }
-
 
     }
 }

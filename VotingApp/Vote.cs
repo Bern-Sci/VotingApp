@@ -47,20 +47,19 @@ public class Vote
         while (maxVotes > 0)
         {
             Console.Clear();
-            Console.WriteLine($"Currently logged in: {voter.StudentId}");
+            Console.WriteLine($"Currently logged in: {voter.Code}, {voter.YearLevel}");
             Console.WriteLine($"Position: {pos} - Remaining Votes: {maxVotes}");
             Console.WriteLine("Choose a candidate to vote:");
             int counter = 1;
             foreach (Candidate c in candidates)
             {
-                Console.WriteLine($"{counter}. {c}");
+                Console.WriteLine($"{counter}. {c.Name}");
                 counter++;
             }
             Console.WriteLine($"{counter}. ABSTAIN");
 
             string temp = Console.ReadLine();
-            bool success = int.TryParse(temp, out int choice); //Mo test if ang user input is lesser than sa number of candidates
-
+            bool success = int.TryParse(temp, out int choice);
             if (success && choice > 0 && choice <= candidates.Count)
             {
                 if (choices.Count == 0)
@@ -87,7 +86,7 @@ public class Vote
             }
             else if (success && choice > 0 && choice == candidates.Count + 1)
             {
-                Candidate AbstainCandidate = new Candidate("ABSTAINED", "ABSTAINED", "ABSTAINED", candidates[0].pos);
+                Candidate AbstainCandidate = new Candidate("ABSTAINED", candidates[0].pos);
                 chosenCandidate.Add(AbstainCandidate);
                 choices.Add(-1);
                 maxVotes--;
@@ -101,17 +100,15 @@ public class Vote
     {
         List<int> indexOfPos = new List<int>();
 
-        // Get the indices of candidates with the specified position
         for (int i = 0; i < chosenCandidate.Count; i++)
         {
             if (chosenCandidate[i].pos.Equals(position))
             {
                 indexOfPos.Add(i);
-                chosenCandidate[i] = null; // Set the candidate to null
+                chosenCandidate[i] = null; 
             }
         }
 
-        // Modify the values at the specified indices
         int index = 0;
 
         List<Candidate> samePosCandidate = candidateList.getCandidatesInPos(position);
@@ -148,7 +145,7 @@ public class Vote
             else if (success && choice > 0 && choice == samePosCandidate.Count + 1)
             {
                 // Create an AbstainCandidate and set it at the specified index
-                chosenCandidate[indexOfPos[index]] = new Candidate("ABSTAINED", "ABSTAINED", "ABSTAINED", position);
+                chosenCandidate[indexOfPos[index]] = new Candidate("ABSTAINED", position);
                 index++;
                 remainingVotes--;
             }
@@ -226,27 +223,5 @@ public class Vote
         }
     }
 
-    public void RecordVote()
-    {
-        // Provide the path to your desired text file
-        string filePath = "D:\\CandidateList\\VoteResult.txt";
-        if (voter.canVote == true)
-        {
-            // Open the file in append mode, so it doesn't overwrite the existing content
-            using (StreamWriter writer = new StreamWriter(filePath, true))
-            {
-                writer.WriteLine($"{voter.Name} {voter.StudentId}:");
-                foreach (Candidate c in chosenCandidate)
-                {
-                    if (c != null)
-                        writer.WriteLine($"{c.pos.ToString()}: {c.Name}");
-                }
-                writer.WriteLine();
-            }
 
-            Console.WriteLine("Vote recorded successfully!");
-            Console.ReadKey();
-        }
-        else return;
-    }
 }

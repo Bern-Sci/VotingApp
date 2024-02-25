@@ -13,23 +13,9 @@
   <Class Name="VotingApp.CandidateList">
     <Position X="15.75" Y="2.25" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAAAAAAAABIAAAAAAAAAAAAAAAAAIAAACAAAAAAAAA=</HashCode>
+      <HashCode>AAACAAAAAQAAAAAAAAAAAAAAAAAAAQAAACAABIAAAAA=</HashCode>
       <FileName>CandidateList.cs</FileName>
     </TypeIdentifier>
-    <ShowAsCollectionAssociation>
-      <Property Name="candidates" />
-    </ShowAsCollectionAssociation>
-  </Class>
-  <Class Name="VotingApp.Login">
-    <Position X="13.25" Y="8" Width="1.5" />
-    <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAAAAQABAAAAAQAAAAAAAAAACAAIAAAAAA=</HashCode>
-      <FileName>Login.cs</FileName>
-    </TypeIdentifier>
-    <ShowAsCollectionAssociation>
-      <Field Name="candidates" />
-      <Field Name="voters" />
-    </ShowAsCollectionAssociation>
   </Class>
   <Class Name="VotingApp.Student">
     <Position X="7" Y="2" Width="1.5" />
@@ -41,35 +27,24 @@
   <Class Name="VotingApp.Voter">
     <Position X="2.5" Y="3.75" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAAAAAEAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <HashCode>AAAAAAAAAAAAAAAAAAAgAAAAAAAAEAAAAAAACAAAAAA=</HashCode>
       <FileName>Voter.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="VotingApp.VoterList">
     <Position X="15.75" Y="5.5" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAAAgAAAAAAAAQAEAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <HashCode>AAACAAAAAAAAAAQAAAAAAAAAAAAAAAAAAAAQBIAABAA=</HashCode>
       <FileName>VoterList.cs</FileName>
     </TypeIdentifier>
     <ShowAsCollectionAssociation>
       <Property Name="voters" />
     </ShowAsCollectionAssociation>
   </Class>
-  <Class Name="Vote">
-    <Position X="10.25" Y="2.25" Width="1.5" />
-    <TypeIdentifier>
-      <HashCode>AQAAAAIKAAAAAAQABAAAAAAAAAAAAIAAQAAAAAAQAAA=</HashCode>
-      <FileName>Vote.cs</FileName>
-    </TypeIdentifier>
-    <ShowAsAssociation>
-      <Field Name="voter" />
-      <Field Name="candidateList" />
-    </ShowAsAssociation>
-  </Class>
   <Enum Name="VotingApp.Position">
     <Position X="1.75" Y="6.5" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>gAAgAAABABAAAAAAACAAAAAwEAIAAAAAAAAAAQKAAAA=</HashCode>
+      <HashCode>gAAgAAABABAAAAAAACAAAAAwAAIAAAAAAAAAAQKAAAA=</HashCode>
       <FileName>Position.cs</FileName>
     </TypeIdentifier>
   </Enum>

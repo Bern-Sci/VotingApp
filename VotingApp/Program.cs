@@ -3,20 +3,24 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using FireSharp.Config;
+using FireSharp.Response;
+using FireSharp.Interfaces;
 
 namespace VotingApp
 {
     public class Program
     {
-        static void Main(string[] args)
+        static async Task Main(string[] args)
         {
-            CandidateList candidateList = new CandidateList("D:\\CandidateList\\Candidates.txt");
-            VoterList voters = new VoterList("D:\\CandidateList\\VoterList.txt");
-
+            string Auth = "6yFfNdlL6Sd6Xi81eOIyBLeOpINPgVHsV8x9e35C";
+            string Path = "https://voter-app-26744-default-rtdb.firebaseio.com/";
+            CandidateList candidateList = await CandidateList.CreateAsync(Auth, Path);
+            VoterList voterList = await VoterList.CreateAsync(Auth, Path);
             while (true)
             {
                 Console.Clear();
-                Login newLog = new Login(candidateList, voters);
+                Login newLog = new Login(candidateList, voterList);
                 Voter Name = newLog.LoginPrompt();
                 Vote Vote1 = new Vote(Name, candidateList);
                 Vote1.startVote();
@@ -25,11 +29,9 @@ namespace VotingApp
                     Vote1.VoteAgain();
                 }
                 Console.Clear();
-                voters.MarkVoterAsVoted(Name.StudentId);
-                Vote1.RecordVote();
+                await voterList.MarkVoterAsVoted(Name);
                 Console.ReadKey();
             }
-         
         }
     }
 }

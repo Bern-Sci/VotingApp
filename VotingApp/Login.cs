@@ -17,59 +17,43 @@ namespace VotingApp
             voters = voterList.voters;
         }
 
-        public bool TryLogin(string studentId, string password)
+        public bool TryLogin(string code)
         {
-            foreach (Candidate candidate in candidates)
+            if (candidates.Count == 0) return false;
+            else
             {
-                if (candidate.StudentId == studentId)
-                    return false;
-            }
-
-            foreach (Voter voter in voters)
-            {
-                if (voter.StudentId == studentId && voter.Password == password && voter.canVote)
+                foreach (Voter v in voters)
                 {
-                    return true;
+                    if (v.Code.ToString() == code && v.canVote) return true;
+                    else if (v.canVote == false)
+                    {
+                        Console.WriteLine("You have voted already!");
+                        Console.ReadKey();
+                        return false;
+                    }
                 }
-                else if(voter.StudentId == studentId && voter.Password == password && voter.canVote == false)
-                {
-                    Console.WriteLine("You have already voted!");
-                    return false;
-                }
+                    
             }
-
             return false;
         }
 
         public Voter LoginPrompt()
         {
-            bool isLoggedIn = false;
-            string sId = "";
-            while (isLoggedIn == false)
+            while (true)
             {
                 Console.Clear();
-                Console.Write("Student ID: ");
-                sId = Console.ReadLine();
-                Console.Write("\nPassword: ");
-                string password = Console.ReadLine();
-                bool isSuccess = TryLogin(sId, password);
-                if (isSuccess == true) isLoggedIn = true;
+                Console.Write("Enter your code: ");
+                string code = Console.ReadLine();
+
+                if (TryLogin(code))
+                {
+                    Console.WriteLine($"{code} login successful!");
+                    return voters.First(v => v.Code.ToString() == code);
+                }
                 else
                 {
-                    Console.WriteLine("Invalid credentials, please try again.");
-                    Console.WriteLine("Press any key to log in again.");
-                    Console.ReadKey();
+                    Console.WriteLine("Invalid code. Please try again.");
                 }
-            }
-            return new Voter(sId);
-        }
-
-
-        public void dispAllVoter() 
-        {
-            foreach (Voter v in voters)
-            {
-                Console.WriteLine($"{v.Name} {v}, Can vote: {v.canVote}");
             }
         }
     }

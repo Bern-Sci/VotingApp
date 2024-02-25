@@ -1,22 +1,22 @@
-John Smith 22-02-123456 Treasurer Xy8t3d5
-Emily Davis 22-02-789012 SecondYrRep Rf7g2h1
-Daniel Johnson 22-02-345678 IrregRep Kp9s4r2
-Jessica White 22-02-901234 FirstYrRep Lq5a8w9
-Michael Miller 22-02-567890 PIO Xz2y1b4
-Olivia Brown 22-02-234567 Auditor Qo3l7p6
-Ethan Wilson 22-02-890123 ThirdYrRep Hm6n1i9
-Sophia Taylor 22-02-456789 SgtAtArms Vx8g3s1
-Alexander Moore 22-02-112233 SgtAtArms Jk9p8l7
-Ava Anderson 22-02-778899 President Zc2x4y9
-Liam Lee 22-02-445566 VicePresident Bv5n3m2
-Emma Harris 22-02-110022 PIO Fq7o9r2
-Benjamin Turner 22-02-776655 President Lw4i3q8
-Mia Martin 22-02-998877 Secretary Pt2a4d7
-Noah Robinson 22-02-334455 VicePresident Xh6t8y7
-Isabella Rodriguez 22-02-990011 President Gf3c1v7
-Aiden Martinez 22-02-556677 Treasurer Kp9s4r2
-Sophia Garcia 22-02-112233 SecondYrRep Xr7w8q9
-Lucas Smith 22-02-778899 President Lm2o9p8
-Amelia White 22-02-445566 Auditor Zx8v2y1
-Emma Johnson 22-02-112233 President Yz9a8b7
-James Davis 22-02-445566 VicePresident Wx7p8l9
+John Smith Treasurer
+Emily Davis SecondYrRep
+Daniel Johnson IrregRep
+Jessica White FirstYrRep
+Michael Miller PIO
+Olivia Brown Auditor
+Ethan Wilson ThirdYrRep
+Sophia Taylor SgtAtArms
+Alexander Moore SgtAtArms
+Ava Anderson President
+Liam Lee VicePresident
+Emma Harris PIO
+Benjamin Turner President
+Mia Martin Secretary
+Noah Robinson VicePresident
+Isabella Rodriguez President
+Aiden Martinez Treasurer
+Sophia Garcia SecondYrRep
+Lucas Smith President
+Amelia White Auditor
+Emma Johnson President
+James Davis VicePresident
