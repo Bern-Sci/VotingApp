@@ -16,12 +16,14 @@ namespace VotingApp
             string Auth = "6yFfNdlL6Sd6Xi81eOIyBLeOpINPgVHsV8x9e35C";
             string Path = "https://voter-app-26744-default-rtdb.firebaseio.com/";
             CandidateList candidateList = await CandidateList.CreateAsync(Auth, Path);
-            VoterList voterList = await VoterList.CreateAsync(Auth, Path);
+            
             while (true)
             {
                 Console.Clear();
+                VoterList voterList = await VoterList.CreateAsync(Auth, Path);
                 Login newLog = new Login(candidateList, voterList);
                 Voter Name = newLog.LoginPrompt();
+                
                 Vote Vote1 = new Vote(Name, candidateList);
                 Vote1.startVote();
                 while (Vote1.ShowVoteSummary())
@@ -29,6 +31,8 @@ namespace VotingApp
                     Vote1.VoteAgain();
                 }
                 Console.Clear();
+                Summary voteSummary = new Summary(Auth, Path, Vote1);
+                await voteSummary.UploadSummaryAsync();
                 await voterList.MarkVoterAsVoted(Name);
                 Console.ReadKey();
             }

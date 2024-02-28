@@ -25,7 +25,7 @@ namespace VotingApp
                 foreach (Voter v in voters)
                 {
                     if (v.Code.ToString() == code && v.canVote) return true;
-                    else if (v.canVote == false)
+                    else if (v.Code.ToString() == code && v.canVote == false)
                     {
                         Console.WriteLine("You have voted already!");
                         Console.ReadKey();

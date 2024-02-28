@@ -29,10 +29,14 @@ public class Vote
         Choices.Add(VoteForCandidateInPos(candidateList.getCandidatesInPos(Position.Auditor), 1));
         Choices.Add(VoteForCandidateInPos(candidateList.getCandidatesInPos(Position.PIO), 2));
         Choices.Add(VoteForCandidateInPos(candidateList.getCandidatesInPos(Position.SgtAtArms), 2));
-        Choices.Add(VoteForCandidateInPos(candidateList.getCandidatesInPos(Position.FirstYrRep), 1));
-        Choices.Add(VoteForCandidateInPos(candidateList.getCandidatesInPos(Position.SecondYrRep), 1));
+        if(voter.YearLevel == YearLevel.FirstYear)
+            Choices.Add(VoteForCandidateInPos(candidateList.getCandidatesInPos(Position.FirstYrRep), 1));
+        if(voter.YearLevel == YearLevel.SecondYear)
+            Choices.Add(VoteForCandidateInPos(candidateList.getCandidatesInPos(Position.SecondYrRep), 1));
+        if(voter.YearLevel == YearLevel.ThirdYear)
         Choices.Add(VoteForCandidateInPos(candidateList.getCandidatesInPos(Position.ThirdYrRep), 1));
-        Choices.Add(VoteForCandidateInPos(candidateList.getCandidatesInPos(Position.FourthYrRep), 1));
+        if(voter.YearLevel == YearLevel.FourthYear)
+            Choices.Add(VoteForCandidateInPos(candidateList.getCandidatesInPos(Position.FourthYrRep), 1));
     }
 
     private List<int> VoteForCandidateInPos(List<Candidate> candidates, int maxVotes)
@@ -144,7 +148,6 @@ public class Vote
             }
             else if (success && choice > 0 && choice == samePosCandidate.Count + 1)
             {
-                // Create an AbstainCandidate and set it at the specified index
                 chosenCandidate[indexOfPos[index]] = new Candidate("ABSTAINED", position);
                 index++;
                 remainingVotes--;
@@ -209,16 +212,32 @@ public class Vote
                 changeVoteInThisPos(Position.SgtAtArms);
                 break;
             case 8:
-                changeVoteInThisPos(Position.FirstYrRep);
+                if(voter.YearLevel == YearLevel.FirstYear)
+                {
+                    changeVoteInThisPos(Position.FirstYrRep);
+                    break;
+                }       
                 break;
             case 9:
-                changeVoteInThisPos(Position.SecondYrRep);
+                if (voter.YearLevel == YearLevel.SecondYear)
+                {
+                    changeVoteInThisPos(Position.SecondYrRep);
+                    break;
+                }
                 break;
             case 10:
-                changeVoteInThisPos(Position.ThirdYrRep);
+                if (voter.YearLevel == YearLevel.ThirdYear)
+                {
+                    changeVoteInThisPos(Position.ThirdYrRep);
+                    break;
+                }
                 break;
             case 11:
-                changeVoteInThisPos(Position.FourthYrRep);
+                if (voter.YearLevel == YearLevel.FourthYear)
+                {
+                    changeVoteInThisPos(Position.FourthYrRep);
+                    break;
+                }
                 break;
         }
     }

@@ -60,7 +60,7 @@ namespace VotingApp
         {
             foreach (Voter v in voters)
             {
-                Console.WriteLine(v.Code + $" {v.YearLevel}");
+                Console.WriteLine(v.Code + $" {v.YearLevel}, Can Vote?: {v.canVote}");
             }
         }
 
