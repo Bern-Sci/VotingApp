@@ -31,9 +31,12 @@ namespace VotingApp
 
         public async Task UploadSummaryAsync()
         {
+            int currentYear = DateTime.Now.Year;
+            string electionEvent = $"Election Event {currentYear}";
+
             foreach (var candidate in voteResult.chosenCandidate)
             {
-                string path = $"Vote Result/{voteResult.voter.YearLevel}/{voteResult.voter.Code}/{candidate.pos}/{candidate.Name}";
+                string path = $"{electionEvent}/Vote Result/{voteResult.voter.YearLevel}/{voteResult.voter.Code}/{candidate.pos}/{candidate.Name}";
                 FirebaseResponse resp = await Task.Run(() => client.Get(path));
                 if (resp.Body == "null")
                 {
@@ -44,10 +47,11 @@ namespace VotingApp
                 else
                 {
                     Console.WriteLine("Voter's summary already exists.");
-                    break; 
+                    break;
                 }
             }
         }
+
 
         public void displayChosen()
         {

@@ -42,6 +42,8 @@ namespace VotingApp
             while (true)
             {
                 Console.Clear();
+                Console.WriteLine($"Voters in list: {voters.Count}");
+                Console.WriteLine($"Candidates in list: {candidates.Count}");
                 Console.Write("Enter your code: ");
                 string code = Console.ReadLine();
 

@@ -39,7 +39,10 @@ namespace VotingApp
 
         private async Task GetCandidatesFromDatabase()
         {
-            FirebaseResponse response = await client.GetTaskAsync("Candidate/Position");
+            int currentYear = DateTime.Now.Year;
+            string electionEvent = $"Election Event {currentYear}";
+
+            FirebaseResponse response = await client.GetTaskAsync($"{electionEvent}/Candidate/Position");
             Dictionary<string, Dictionary<string, Dictionary<string, string>>> data = Newtonsoft.Json.JsonConvert.DeserializeObject<Dictionary<string, Dictionary<string, Dictionary<string, string>>>>(response.Body);
 
             foreach (var position in data)
@@ -47,11 +50,14 @@ namespace VotingApp
                 Position pos = (Position)Enum.Parse(typeof(Position), position.Key);
                 foreach (var candidate in position.Value)
                 {
-                    Candidate newCandidate = new Candidate(candidate.Key, pos);
+                    string candidateName = candidate.Value["Name"];
+                    Candidate newCandidate = new Candidate(candidateName, pos);
                     candidates.Add(newCandidate);
                 }
             }
         }
+
+
         public void displayCandidates()
         {
             foreach (var candidate in candidates)

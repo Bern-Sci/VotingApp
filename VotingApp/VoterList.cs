@@ -39,21 +39,34 @@ namespace VotingApp
 
         private async Task GetVotersFromDatabase()
         {
-            FirebaseResponse response = await client.GetTaskAsync("Voter");
-            Dictionary<string, Dictionary<string, Dictionary<string, object>>> data = Newtonsoft.Json.JsonConvert.DeserializeObject<Dictionary<string, Dictionary<string, Dictionary<string, object>>>>(response.Body);
+            int currentYear = DateTime.Now.Year;
+            string electionEvent = $"Election Event {currentYear}";
+
+            FirebaseResponse response = await client.GetTaskAsync($"{electionEvent}/Vote");
+            Dictionary<string, Dictionary<string, Dictionary<string, Dictionary<string, object>>>> data = Newtonsoft.Json.JsonConvert.DeserializeObject<Dictionary<string, Dictionary<string, Dictionary<string, Dictionary<string, object>>>>>(response.Body);
 
             foreach (var yearLevel in data)
             {
                 YearLevel yr = (YearLevel)Enum.Parse(typeof(YearLevel), yearLevel.Key);
                 foreach (var voter in yearLevel.Value)
                 {
-                    long code = long.Parse(voter.Key);
-                    bool canVote = (bool)voter.Value["canVote"];
-                    Voter newVoter = new Voter(yr, canVote, code);
-                    voters.Add(newVoter);
+                    if (long.TryParse(voter.Key, out long code))
+                    {
+                        bool canVote = (bool)voter.Value["canVote"]["canVote"];
+                        Voter newVoter = new Voter(yr, canVote, code);
+                        voters.Add(newVoter);
+                    }
+                    else
+                    {
+                        Console.WriteLine($"Failed to parse voter code: {voter.Key}");
+                    }
                 }
             }
         }
+
+
+
+
 
 
         public void displayVoters()
@@ -66,12 +79,15 @@ namespace VotingApp
 
         public async Task MarkVoterAsVoted(Voter voter)
         {
+            int currentYear = DateTime.Now.Year;
+            string electionEvent = $"Election Event {currentYear}";
+
             try
             {
-                FirebaseResponse response = await client.GetTaskAsync($"Voter/{voter.YearLevel}/{voter.Code}");
+                FirebaseResponse response = await client.GetTaskAsync($"{electionEvent}/Vote/{voter.YearLevel}/{voter.Code}/canVote");
                 Dictionary<string, object> voterFromDb = response.ResultAs<Dictionary<string, object>>();
                 voterFromDb["canVote"] = false;
-                SetResponse setResponse = await client.SetTaskAsync($"Voter/{voter.YearLevel}/{voter.Code}", voterFromDb);
+                SetResponse setResponse = await client.SetTaskAsync($"{electionEvent}/Vote/{voter.YearLevel}/{voter.Code}/canVote", voterFromDb);
                 Console.WriteLine($"Voter with code {voter.Code} has been marked as voted");
                 voter.canVote = false;
             }
@@ -80,6 +96,7 @@ namespace VotingApp
                 Console.WriteLine($"Failed to mark voter with code {voter.Code} as voted. Error: {ex.Message}");
             }
         }
+
 
     }
 }
